@@ -1,12 +1,48 @@
-set nocompatible
-execute pathogen#infect()
-syntax on
-filetype plugin indent on
+" Note: Skip initialization for vim-tiny or vim-small.
+ if !1 | finish | endif
+
+ if has('vim_starting')
+   if &compatible
+     set nocompatible               " Be iMproved
+   endif
+
+   " Required:
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
+ endif
+
+ " Required:
+ call neobundle#begin(expand('~/.vim/bundle/'))
+
+ " Let NeoBundle manage NeoBundle
+ " Required:
+ NeoBundleFetch 'Shougo/neobundle.vim'
+
+ " My Bundles here:
+ " Refer to |:NeoBundle-examples|.
+ " Note: You don't set neobundle setting in .gvimrc!
+ 
+NeoBundle 'fatih/vim-go'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'shougo/unite.vim'
+NeoBundle 'altercation/vim-colors-solarized'
+
+ call neobundle#end()
+
+ " Required:
+ filetype plugin indent on
+
+ " If there are uninstalled bundles found on startup,
+ " this will conveniently prompt you to install them.
+ NeoBundleCheck
 
 " colors
 set t_Co=256
 set background=dark
-colorscheme solarized
+"colorscheme solarized
 
 " Mouse
 set mouse=a
@@ -30,52 +66,6 @@ let php_htmlInStrings=1
 set wildmenu
 " Insert mode completion options
 set completeopt=menu,longest,preview
-
-" Nerdtree
-let NERDTreeShowBookmarks=1
-let NERDTreeDirArrows=0
-let NERDTreeChDirMode=0
-let NERDTreeQuitOnOpen=0
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\.pyc','\~$','\.swo$','\.swp$','\.git','\.hg','\.svn','\.bzr']
-let NERDTreeKeepTreeInNewTab=1
-let g:nerdtree_tabs_open_on_gui_startup=0
-
-
-let g:Powerline_symbols = 'fancy'
-
-
-
-" Only do this part when compiled with support for autocommands
-if has("autocmd")
-    " Enable file type detection
-    filetype on
-
-    " Syntax of these languages is fussy over tabs Vs spaces
-    autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
-    " Customisations based on house-style (arbitrary)
-    autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab  omnifunc=csscomplete#CompleteCSS
-    autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab textwidth=79 omnifunc=pythoncomplete#Complete
-    autocmd FileType php setlocal ts=4 sts=4 sw=4 expandtab  omnifunc=phpcomplete#CompletePHP
-    autocmd FileType coffee setlocal shiftwidth=2 expandtab
-    au filetype sql         set omnifunc=sqlcomplete#Complete
-    au filetype xml         set omnifunc=xmlcomplete#CompleteTags
-
-    " Source the vimrc file after saving it
-     autocmd bufwritepost .vimrc source $MYVIMRC
-     autocmd FileType js,php,py autocmd BufWritePre <buffer> :%s/\s\+$//e
-
-endif
-
-"Remove the ~
-set nobackup
-set nowritebackup
-set noswapfile
 
 let mapleader = ","
 " Shortcut to rapidly toggle `set list`
