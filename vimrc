@@ -20,7 +20,14 @@
  " My Bundles here:
  " Refer to |:NeoBundle-examples|.
  " Note: You don't set neobundle setting in .gvimrc!
- 
+NeoBundle 'Shougo/vimproc.vim', {
+      \ 'build': {
+        \ 'mac': 'make -f make_mac.mak',
+        \ 'unix': 'make -f make_unix.mak',
+        \ 'cygwin': 'make -f make_cygwin.mak',
+        \ 'windows': '"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\nmake.exe" make_msvc32.mak',
+      \ },
+    \ }
 NeoBundle 'fatih/vim-go'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
@@ -29,7 +36,10 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'shougo/unite.vim'
 NeoBundle 'altercation/vim-colors-solarized'
-
+NeoBundle 'croaker/mustang-vim'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/unite-session'
  call neobundle#end()
 
  " Required:
@@ -40,9 +50,18 @@ NeoBundle 'altercation/vim-colors-solarized'
  NeoBundleCheck
 
 " colors
-set t_Co=256
-set background=dark
-"colorscheme solarized
+if &term =~ "xterm-256color" || "screen-256color"
+  set t_Co=256
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+elseif &term =~ "xterm-color"
+  set t_Co=8
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+endif
+
+set background =dark
+colorscheme mustang
 
 " Mouse
 set mouse=a
