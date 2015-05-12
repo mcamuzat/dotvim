@@ -40,6 +40,7 @@ NeoBundle 'croaker/mustang-vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-session'
+NeoBundle 'junegunn/seoul256.vim'
  call neobundle#end()
 
  " Required:
@@ -60,9 +61,9 @@ elseif &term =~ "xterm-color"
   set t_Sb=[4%dm
 endif
 
+let g:solarized_termcolors=256
 set background =dark
-colorscheme mustang
-
+colorscheme solarized
 " Mouse
 set mouse=a
 set mousehide
