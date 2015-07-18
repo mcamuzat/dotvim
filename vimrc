@@ -41,6 +41,9 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-session'
 NeoBundle 'junegunn/seoul256.vim'
+NeoBundle 'brookhong/DBGPavim'
+NeoBundle 'def-lkb/vimbufsync'
+NeoBundle 'the-lambda-church/coquille'
  call neobundle#end()
 
  " Required:
@@ -64,6 +67,7 @@ endif
 let g:solarized_termcolors=256
 set background =dark
 colorscheme solarized
+
 " Mouse
 set mouse=a
 set mousehide
@@ -89,7 +93,40 @@ set completeopt=menu,longest,preview
 
 let mapleader = ","
 " Shortcut to rapidly toggle `set list`
+
+" Only do this part when compiled with support for autocommands
+if has("autocmd")
+    " Enable file type detection
+    filetype on
+
+    " Syntax of these languages is fussy over tabs Vs spaces
+    autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+    " Customisations based on house-style (arbitrary)
+    autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab  omnifunc=csscomplete#CompleteCSS
+    autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab textwidth=79 omnifunc=pythoncomplete#Complete
+    autocmd FileType php setlocal ts=4 sts=4 sw=4 expandtab  omnifunc=phpcomplete#CompletePHP
+    autocmd FileType coffee setlocal shiftwidth=2 expandtab
+    au filetype sql         set omnifunc=sqlcomplete#Complete
+    au filetype xml         set omnifunc=xmlcomplete#CompleteTags
+
+    " Source the vimrc file after saving it
+     autocmd bufwritepost .vimrc source $MYVIMRC
+     autocmd FileType js,php,py autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+endif
+
+"Remove the ~
+set nobackup
+set nowritebackup
+set noswapfile
+
 nmap <leader>f :NERDTreeToggle<CR>
 nmap <leader>v :tabedit $MYVIMRC<CR>
 nmap <leader>l :set list!<CR>
+nmap <leader>sp :set spell spelllang=fr<CR> 
 set listchars=tab:▸\ ,eol:¬
+
